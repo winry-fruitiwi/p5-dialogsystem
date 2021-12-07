@@ -1,7 +1,11 @@
 /*
 
-@author 
-@date 2021-12-
+@author Winry
+@date 2021-12-6
+
+code plan:
+    figure out how to work with passages.json, and with json files in general
+
 */
 
 let font
@@ -17,11 +21,22 @@ function preload() {
 let textList = []
 /* grab other information: ms spent on each passage, highlights */
 let highlightList = [] // a list of tuples specifying highlights and indexes
-let msPerPassage = 0 // how long to wait before advancing a passage
+let msPerPassage = [] // how long to wait before advancing a passage
 
 function setup() {
+    createCanvas(640, 360)
     colorMode(HSB, 360, 100, 100, 100)
     textFont(font, 14)
+
+    console.log(Object.keys(passages).length)
+
+    for (let p in passages) {
+        console.log(passages[p].ms)
+    }
+
+    for (let i = 0; i < Object.keys(passages).length; i++) {
+        console.log(passages[i].highlightIndices)
+    }
 }
 
 function draw() {
