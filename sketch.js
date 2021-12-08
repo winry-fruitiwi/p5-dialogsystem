@@ -35,8 +35,14 @@ function setup() {
     }
 
     for (let i = 0; i < Object.keys(passages).length; i++) {
-        console.log(passages[i].highlightIndices)
+        textList.push(passages[i].text)
+        highlightList.push(passages[i].highlightIndices)
+        msPerPassage.push(passages[i].ms)
     }
+
+    console.log(textList)
+    console.log(highlightList)
+    console.log(msPerPassage)
 }
 
 function draw() {
