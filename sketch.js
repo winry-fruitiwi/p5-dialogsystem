@@ -5,6 +5,9 @@
 
 code plan:
     figure out how to work with passages.json, and with json files in general
+    fill in the three lists
+    display one-line passage
+    TODO make letter wrap tomorrow, as of 12/9/2021
 
 */
 
@@ -22,6 +25,7 @@ let textList = []
 /* grab other information: ms spent on each passage, highlights */
 let highlightList = [] // a list of tuples specifying highlights and indexes
 let msPerPassage = [] // how long to wait before advancing a passage
+let dialogBox
 
 function setup() {
     createCanvas(640, 360)
@@ -43,13 +47,18 @@ function setup() {
     console.log(textList)
     console.log(highlightList)
     console.log(msPerPassage)
+
+    dialogBox = new DialogBox(passages, highlightList, msPerPassage)
 }
 
 function draw() {
     background(234, 34, 24)
 
-
+    // text("Not just groovy!", width/2, height/2) // just seeing the font :)
+    // render the dialog
+    dialogBox.render()
 }
+
 // prevent the context menu from showing up :3 nya~
 document.oncontextmenu = function () {
     return false;
