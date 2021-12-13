@@ -60,9 +60,10 @@ function setup() {
         msPerPassage.push(passages[i].ms)
     }
 
-    console.log(textList)
-    console.log(highlightList)
-    console.log(msPerPassage)
+
+    // console.log(textList)
+    // console.log(highlightList)
+    // console.log(msPerPassage)
 
     dialogBox = new DialogBox(passages, highlightList, msPerPassage)
 }
