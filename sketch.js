@@ -7,8 +7,28 @@ code plan:
     figure out how to work with passages.json, and with json files in general
     fill in the three lists
     display one-line passage
-    TODO make letter wrap tomorrow, as of 12/9/2021
+    letter wrap
+    word wrap
+    advancing text, single paragraph
+    advancing text, multiple paragraphs
+    sync perfectly with Adam text
+    add dialogue box
+    merge Adam's project into this one, creating Metroid Dread experience
 
+    additions:
+        things we can tackle right now:
+            use this to generalize into other paragraphs with more json
+            use this model to do the same for final fantasy paragraphs
+
+        later goals:
+            in a couple months, we can model Samus and put her in
+            in a year or so, we can come up with equations to create lights
+            in at least a year, we can make a one-hour Metroid game
+            in at least two years, we can make a real Metroid game
+
+        after becoming a game developer:
+            release the next Metroid game
+            release new games using Metroid dialog systems
 */
 
 let font
@@ -33,10 +53,6 @@ function setup() {
     textFont(font, 14)
 
     console.log(Object.keys(passages).length)
-
-    for (let p in passages) {
-        console.log(passages[p].ms)
-    }
 
     for (let i = 0; i < Object.keys(passages).length; i++) {
         textList.push(passages[i].text)
