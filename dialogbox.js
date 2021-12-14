@@ -7,9 +7,10 @@ class DialogBox {
             " changes seems to have stripped you of most abilities. That" +
             " brings me to your " + "assailant. I am checking the Federation" +
             " database against your" +
-            " video log. It appears to be been a Chozo. The attacker's" +
+            " video log. It appears to have been a Chozo. The attacker's" +
             " identity is not yet clear." +
-            " Return to your ship on the surface."
+            " Return to your ship on the surface. "
+        // "It appears to have been a Chozo" had "be" instead of "have"!
         this.index = 0
         this.correctList = []
     }
@@ -30,14 +31,37 @@ class DialogBox {
             fill(0, 0, 100)
             text(letter, cursor.x, cursor.y)
 
-            // if the width of our letter and our x position are greater
-            // than width-margin, we start a new line by modifying the
-            // current cursor we have.
-            if (cursor.x + textWidth(letter) > width - margin) {
-                cursor.x = margin
-                cursor.y += textAscent() + textDescent() + 2
-                continue
+            // // if the width of our letter and our x position are greater
+            // // than width-margin, we start a new line by modifying the
+            // // current cursor we have.
+            // if (cursor.x + textWidth(letter) > width - margin) {
+            //     cursor.x = margin
+            //     cursor.y += textAscent() + textDescent() + 2
+            //     continue
+            // } old letter wrap
+
+            // more advanced word wrap
+            if (letter === " ") {
+                let currentDelimiter = i
+                let nextDelimiter = this.passage.indexOf(" ", i+1)
+                let nextWord = this.passage.substring(
+                    currentDelimiter,
+                    nextDelimiter + 1 // add one to include the space
+                )
+
+                if (textWidth(nextWord) + cursor.x >= width-margin) {
+                    cursor.x = margin
+                    cursor.y += textAscent() + textDescent() + 2
+                    continue
+                }
             }
+
+
+            /*
+            if letter = space, check delimiters: this index and the next space.
+            if the length of the word between the delimiters > margin - width:
+            add to y and reset x, then continue.
+             */
 
             // advance the text
             cursor.x += textWidth(letter)

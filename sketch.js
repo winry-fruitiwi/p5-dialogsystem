@@ -4,11 +4,14 @@
 @date 2021-12-6
 
 code plan:
-    figure out how to work with passages.json, and with json files in general
-    fill in the three lists
-    display one-line passage
-    letter wrap
+   .figure out how to work with passages.json, and with json files in general
+   .fill in the three lists
+   .display one-line passage (don't save coordinates)
+   .letter wrap
     word wrap
+        if letter = space, check delimiters: this index and the next space.
+        if the length of the word between the delimiters > margin - width:
+        add to y and reset x, then continue.
     advancing text, single paragraph
     advancing text, multiple paragraphs
     sync perfectly with Adam text
