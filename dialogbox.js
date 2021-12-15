@@ -11,6 +11,8 @@ class DialogBox {
             " identity is not yet clear." +
             " Return to your ship on the surface. "
         // "It appears to have been a Chozo" had "be" instead of "have"!
+
+        // this.index is the key ingredient to advancing letters.
         this.index = 0
         this.correctList = []
     }
@@ -24,7 +26,7 @@ class DialogBox {
         let cursor = new p5.Vector(margin, margin + textAscent())
 
         // loop through every letter in our passage
-        for (let i = 0; i < this.passage.length; i++) {
+        for (let i = 0; i < this.index; i++) {
             let letter = this.passage[i]
 
             // draw the letter
@@ -56,15 +58,13 @@ class DialogBox {
                 }
             }
 
-
-            /*
-            if letter = space, check delimiters: this index and the next space.
-            if the length of the word between the delimiters > margin - width:
-            add to y and reset x, then continue.
-             */
-
             // advance the text
             cursor.x += textWidth(letter)
+        }
+
+        if (frameCount % 3 === 0) {
+            this.index += 1
+            this.index = constrain(this.index, 0, this.passage.length-1)
         }
     }
 }

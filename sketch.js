@@ -8,13 +8,16 @@ code plan:
    .fill in the three lists
    .display one-line passage (don't save coordinates)
    .letter wrap
-    word wrap
+   .word wrap
         if letter = space, check delimiters: this index and the next space.
         if the length of the word between the delimiters > margin - width:
         add to y and reset x, then continue.
     advancing text, single paragraph
+        every frame, advance this.index by 1 and constrain it to passage length.
+        only go up to this index while looping through.
+        Less efficient option: do everything but draw if i > this.index
     advancing text, multiple paragraphs
-    sync perfectly with Adam text
+    sync perfectly with Adam dialog
     add dialogue box
     merge Adam's project into this one, creating Metroid Dread experience
 
