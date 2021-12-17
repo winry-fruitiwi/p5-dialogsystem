@@ -12,11 +12,13 @@ code plan:
         if letter = space, check delimiters: this index and the next space.
         if the length of the word between the delimiters > margin - width:
         add to y and reset x, then continue.
-    advancing text, single paragraph
+   .advancing text, single paragraph
         every frame, advance this.index by 1 and constrain it to passage length.
         only go up to this index while looping through.
         Less efficient option: do everything but draw if i > this.index
     advancing text, multiple paragraphs
+        just use passages input and set the current passage
+    add highlight index functionality
     sync perfectly with Adam dialog
     add dialogue box
     merge Adam's project into this one, creating Metroid Dread experience
@@ -32,7 +34,7 @@ code plan:
             in at least a year, we can make a one-hour Metroid game
             in at least two years, we can make a real Metroid game
 
-        after becoming a game developer:
+        after becoming a game dev:
             release the next Metroid game
             release new games using Metroid dialog systems
 */
@@ -58,8 +60,6 @@ function setup() {
     colorMode(HSB, 360, 100, 100, 100)
     textFont(font, 14)
 
-    console.log(Object.keys(passages).length)
-
     for (let i = 0; i < Object.keys(passages).length; i++) {
         textList.push(passages[i].text)
         highlightList.push(passages[i].highlightIndices)
@@ -71,7 +71,7 @@ function setup() {
     // console.log(highlightList)
     // console.log(msPerPassage)
 
-    dialogBox = new DialogBox(passages, highlightList, msPerPassage)
+    dialogBox = new DialogBox(textList, highlightList, msPerPassage)
 }
 
 function draw() {
