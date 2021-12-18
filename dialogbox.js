@@ -1,16 +1,16 @@
 class DialogBox {
     constructor(passages, highlightIndices, msPerPassage) {
         // this is the old hard-coded passage
-        this.passage = "So, you've accessed a network station. Well done," +
-            " Samus. I have reviewed your vital signs and video log from the" +
-            " data you uploaded. My readings indicate" +
-            " dramatic physical changes in you. Whatever caused these" +
-            " changes seems to have stripped you of most abilities. That" +
-            " brings me to your " + "assailant. I am checking the Federation" +
-            " database against your" +
-            " video log. It appears to have been a Chozo. The attacker's" +
-            " identity is not yet clear." +
-            " Return to your ship on the surface. "
+        // this.passage = "So, you've accessed a network station. Well done," +
+        //     " Samus. I have reviewed your vital signs and video log from the" +
+        //     " data you uploaded. My readings indicate" +
+        //     " dramatic physical changes in you. Whatever caused these" +
+        //     " changes seems to have stripped you of most abilities. That" +
+        //     " brings me to your assailant. I am checking the Federation" +
+        //     " database against your" +
+        //     " video log. It appears to have been a Chozo. The attacker's" +
+        //     " identity is not yet clear." +
+        //     " Return to your ship on the surface. "
         // "It appears to have been a Chozo" had "be" instead of "have"!
         // old: "It appears to be been a Chozo"
 
@@ -20,15 +20,19 @@ class DialogBox {
         this.passageIndex = 0
         // this.index is the key ingredient to advancing letters.
         this.index = 0
-        this.correctList = []
+
+        // we use this to determine which indices to highlight. Also
+        // controlled by this.passageIndex.
+        this.highlightIndices = highlightIndices
     }
 
+    // I looked for this function online, so we can use it as a coding sprint.
     sleep(milliseconds) {
-        const date = Date.now();
-        let currentDate = null;
+        const date = Date.now()
+        let currentDate = null
         do {
-            currentDate = Date.now();
-        } while (currentDate - date < milliseconds);
+            currentDate = Date.now()
+        } while (currentDate - date < milliseconds)
     }
 
     render() {
@@ -39,6 +43,9 @@ class DialogBox {
         // won't be clipped at the top.
         let cursor = new p5.Vector(margin, margin + textAscent())
 
+        // the current sets of highlight indices
+        let highlightIndexSet = this.highlightIndices[this.passageIndex]
+
         // our current passage
         let passage = this.passages[this.passageIndex]
 
@@ -47,7 +54,22 @@ class DialogBox {
             let letter = passage[i]
 
             // draw the letter
-            fill(0, 0, 100)
+            try { // try to retrieve a set of highlight indices
+                if (
+                    i >= highlightIndexSet[0].start &&
+                    i <= highlightIndexSet[0].end
+                )
+                    fill(60, 100, 100)
+                else if (
+                    i >= highlightIndexSet[1].start &&
+                    i <= highlightIndexSet[1].end
+                )
+                    fill(60, 100, 100)
+                else
+                    fill(0, 0, 100)
+            } catch { // if there's no index or too many indices, fill white
+                fill(0, 0, 100)
+            }
             text(letter, cursor.x, cursor.y)
 
             // // if the width of our letter and our x position are greater
@@ -79,9 +101,9 @@ class DialogBox {
             cursor.x += textWidth(letter)
         }
 
-        if (frameCount % 3 === 0) {
+        if (frameCount % 1 === 0) {
             this.index += 1
-            if (this.index > passage.length - 1) {
+            if (this.index > passage.length) {
                 this.sleep(1000)
                 this.index = 0
                 this.passageIndex += 1
