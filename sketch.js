@@ -29,7 +29,7 @@ code plan:
             use this model to do the same for final fantasy paragraphs
 
         later goals:
-            in a couple months, we can model Samus and put her in
+            in a couple of months, we can model Samus and put her inside
             in a year or so, we can come up with equations to create lights
             in at least a year, we can make a one-hour Metroid game
             in at least two years, we can make a real Metroid game
@@ -39,13 +39,13 @@ code plan:
             release new games using Metroid dialog systems
 */
 
-let font
+let font, textFrame
 let passages // our json file input
 
 function preload() {
     font = loadFont('data/notjustgroovy.ttf')
     passages = loadJSON("passages.json")
-
+    textFrame = loadImage('data/textFrame.png')
 }
 
 /* populate an array of passage text */
@@ -53,12 +53,14 @@ let textList = []
 /* grab other information: ms spent on each passage, highlights */
 let highlightList = [] // a list of tuples specifying highlights and indexes
 let msPerPassage = [] // how long to wait before advancing a passage
-let dialogBox
+let dialogBox, cam
 
 function setup() {
-    createCanvas(640, 360)
+    createCanvas(640, 360, WEBGL)
     colorMode(HSB, 360, 100, 100, 100)
     textFont(font, 14)
+    cam = new Dw.EasyCam(this._renderer, {distance: 240});
+
 
     for (let i = 0; i < Object.keys(passages).length; i++) {
         textList.push(passages[i].text)
@@ -71,7 +73,7 @@ function setup() {
     // console.log(highlightList)
     // console.log(msPerPassage)
 
-    dialogBox = new DialogBox(textList, highlightList, msPerPassage)
+    dialogBox = new DialogBox(textList, highlightList, textFrame)
 }
 
 function draw() {

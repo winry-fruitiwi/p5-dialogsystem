@@ -1,5 +1,5 @@
 class DialogBox {
-    constructor(passages, highlightIndices, msPerPassage) {
+    constructor(passages, highlightIndices, textFrame) {
         // this is the old hard-coded passage
         // this.passage = "So, you've accessed a network station. Well done," +
         //     " Samus. I have reviewed your vital signs and video log from the" +
@@ -24,6 +24,9 @@ class DialogBox {
         // we use this to determine which indices to highlight. Also
         // controlled by this.passageIndex.
         this.highlightIndices = highlightIndices
+
+        // the frame for the text
+        this.textFrame = textFrame
     }
 
     // I looked for this function online, so we can use it as a coding sprint.
@@ -35,13 +38,26 @@ class DialogBox {
         } while (currentDate - date < milliseconds)
     }
 
+    // loads the saved box texture with transparency
+    renderTextFrame(cam) {
+        cam.beginHUD(p5._renderer, width, height)
+        image(this.textFrame, 0, 0, width, height)
+        cam.endHUD()
+    }
+
     render() {
+        this.renderTextFrame(cam)
+
+        cam.beginHUD(p5._renderer, width, height)
         // the margin for all sides
-        let margin = 30
+        let margin = 72
         // our current position. since text coordinates start at bottom
         // left, we have to modify the height so that even the largest font
         // won't be clipped at the top.
-        let cursor = new p5.Vector(margin, margin + textAscent())
+        let cursor = new p5.Vector(margin, 270 + textAscent())
+        textSize(18)
+        text("ADAM", 62, 260)
+        textSize(14)
 
         // the current sets of highlight indices
         let highlightIndexSet = this.highlightIndices[this.passageIndex]
@@ -103,14 +119,15 @@ class DialogBox {
 
         if (frameCount % 1 === 0) {
             this.index += 1
-            if (this.index > passage.length) {
-                this.sleep(1000)
-                this.index = 0
-                this.passageIndex += 1
-                if (this.passageIndex >= this.passages.length) {
-                    noLoop()
+            this.index = constrain(this.index, 0, passage.length-1)
+            if (this.index >= passage.length-1) {
+
+                if (this.passageIndex < this.passages.length-1) {
+                    this.index = 0
+                    this.passageIndex += 1
                 }
             }
         }
+        cam.endHUD()
     }
 }
