@@ -76,8 +76,38 @@ function setup() {
     dialogBox = new DialogBox(textList, highlightList, textFrame)
 }
 
+const SATURATION = 100
+const P_BRIGHTNESS = 100
+const N_BRIGHTNESS = 40
+
+// draws a set of axes similar to those in Blender
+function drawBlenderAxes() {
+    // x-axis
+    stroke(0, SATURATION, P_BRIGHTNESS)
+    line(0, 0, 4000, 0)
+
+    stroke(0, SATURATION, N_BRIGHTNESS)
+    line(-4000, 0, 0, 0)
+
+    // y-axis (Webstorm has the values inverted!)
+    stroke(120, SATURATION, P_BRIGHTNESS)
+    line(0, 0, 0, 4000)
+
+    stroke(120, SATURATION, N_BRIGHTNESS)
+    line(0, -4000, 0, 0)
+
+    // z-axis
+    stroke(240, SATURATION, P_BRIGHTNESS)
+    line(0, 0, 0, 0, 0, 4000)
+
+    stroke(240, SATURATION, N_BRIGHTNESS)
+    line(0, 0, -4000, 0, 0, 0)
+}
+
 function draw() {
     background(234, 34, 24)
+
+    drawBlenderAxes()
 
     // text("Not just groovy!", width/2, height/2) // just seeing the font :)
     // render the dialog
